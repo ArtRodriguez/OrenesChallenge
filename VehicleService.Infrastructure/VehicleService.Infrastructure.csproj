@@ -15,9 +15,4 @@
     <ProjectReference Include="..\VehicleService.Domain\VehicleService.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="EntityConfigurations\" />
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>
