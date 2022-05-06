@@ -24,6 +24,13 @@ namespace VehicleService.Domain.AggregatesModel.VehicleAggregate
             _historicalLocations = new List<HistoricalLocation>();
             _orders = new List<Order>();
         }
+        public Vehicle(int id, double latitude, double longitude, string licensePlate) : this()
+        {
+            Id = id;
+            Latitude = latitude;
+            Longitude = longitude;
+            LicensePlate = licensePlate;
+        }
         /// <summary>
         /// Updates the current position of the vehicle and keeps track of it
         /// </summary>
@@ -32,7 +39,7 @@ namespace VehicleService.Domain.AggregatesModel.VehicleAggregate
         public void UpdateLocation(double latitude, double longitude)
         {
             Latitude = latitude;
-            Longitude = longitude;
+            Longitude = longitude;            
             _historicalLocations.Add(new HistoricalLocation(Id, latitude, longitude));
         }
     }

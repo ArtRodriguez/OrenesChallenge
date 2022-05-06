@@ -22,6 +22,8 @@ namespace VehicleService.Infrastructure.Repositories
         {
             if (order.IsTransient())
             {
+                order.CreatedAt = DateTime.Now;
+                order.UpdatedAt = order.CreatedAt;
                 return _context.Orders.Add(order).Entity;
             }
             return order;
@@ -39,6 +41,7 @@ namespace VehicleService.Infrastructure.Repositories
 
         public Order Update(Order order)
         {
+            order.UpdatedAt = DateTime.Now;
             return _context.Orders.Update(order).Entity;
         }
     }

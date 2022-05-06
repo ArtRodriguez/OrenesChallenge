@@ -17,6 +17,8 @@ namespace VehicleService.Domain.AggregatesModel.VehicleAggregate
             VehicleId = vehicleId;
             Latitude = latitude;
             Longitude = longitude;
+            CreatedAt = DateTime.Now;
+            UpdatedAt = CreatedAt;
         }
     }
 }

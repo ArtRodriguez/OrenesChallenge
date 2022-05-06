@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using VehicleService.Domain.AggregatesModel.OrderAggregate;
 using VehicleService.Domain.AggregatesModel.VehicleAggregate;
 using VehicleService.Domain.SeedWork;
+using VehicleService.Infrastructure.EntityConfigurations;
 
 namespace VehicleService.Infrastructure
 {
@@ -27,6 +28,15 @@ namespace VehicleService.Infrastructure
             await _mediator.DispatchDomainEventsAsync(this);
             var result = await base.SaveChangesAsync(cancellationToken);
             return true;
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new VehicleEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new HistoricalLocationEntityTypeConfiguration());            
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

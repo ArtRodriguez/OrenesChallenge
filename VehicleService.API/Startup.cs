@@ -1,7 +1,9 @@
+using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,6 +13,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VehicleService.API.Infrastructure.AutofacModules;
+using VehicleService.Domain.AggregatesModel.OrderAggregate;
+using VehicleService.Domain.AggregatesModel.VehicleAggregate;
+using VehicleService.Infrastructure;
+using VehicleService.Infrastructure.Repositories;
 
 namespace VehicleService.API
 {
@@ -26,17 +33,36 @@ namespace VehicleService.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Database
+            const string DB_ENV = "ConnectionString";
+            string db_conn_str = Environment.GetEnvironmentVariable(DB_ENV);
+
+            if (db_conn_str == null)
+            {                
+                db_conn_str = Configuration.GetConnectionString("DefaultConnection");
+            }
+            // Database
+            services.AddDbContext<VehicleServiceContext>(opt => opt.UseSqlServer(db_conn_str));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "VehicleService.API", Version = "v1" });
             });
+
+            services.AddTransient<IVehicleRepository, VehicleRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new MediatorModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, VehicleServiceContext context)
         {
+            context.Database.Migrate();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

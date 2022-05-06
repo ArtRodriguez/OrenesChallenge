@@ -21,6 +21,8 @@ namespace VehicleService.Infrastructure.Repositories
         {
             if (vehicle.IsTransient())
             {
+                vehicle.CreatedAt = DateTime.Now;
+                vehicle.UpdatedAt = vehicle.CreatedAt;
                 return _context.Vehicles.Add(vehicle).Entity;
             }
             return vehicle;
@@ -33,6 +35,7 @@ namespace VehicleService.Infrastructure.Repositories
 
         public Vehicle Update(Vehicle vehicle)
         {
+            vehicle.UpdatedAt = DateTime.Now;
             return _context.Vehicles.Update(vehicle).Entity;
         }
     }

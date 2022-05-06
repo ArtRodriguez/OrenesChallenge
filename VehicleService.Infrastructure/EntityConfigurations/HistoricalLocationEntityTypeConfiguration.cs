@@ -9,8 +9,7 @@ namespace VehicleService.Infrastructure.EntityConfigurations
         public void Configure(EntityTypeBuilder<HistoricalLocation> builder)
         {
             builder.ToTable("HistoricalLocations");
-            builder.HasKey(x => x.Id);
-            builder.Property(o => o.Id).UseHiLo("HistoricalLocationSeq");
+            builder.HasKey(x => x.Id);            
             builder.Ignore(x => x.DomainEvents);
             builder.Property(x => x.Latitude).IsRequired();
             builder.Property(x => x.Longitude).IsRequired();

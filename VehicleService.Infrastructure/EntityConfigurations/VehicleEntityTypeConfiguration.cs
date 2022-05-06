@@ -11,8 +11,7 @@ namespace VehicleService.Infrastructure.EntityConfigurations
         public void Configure(EntityTypeBuilder<Vehicle> builder)
         {
             builder.ToTable("Vehicles");
-            builder.HasKey(x => x.Id);
-            builder.Property(o => o.Id).UseHiLo("VehiclesSeq");
+            builder.HasKey(x => x.Id);            
             builder.Ignore(x => x.DomainEvents);
             builder.Property(x => x.LicensePlate).HasMaxLength(10).IsRequired();
             builder.Property(x => x.Latitude).IsRequired();
