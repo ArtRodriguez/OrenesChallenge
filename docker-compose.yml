@@ -13,3 +13,11 @@ services:
     depends_on:
       - sqldata
 
+  idp:
+    image: ${DOCKER_REGISTRY-}idp
+    build:
+      context: .
+      dockerfile: Idp/Dockerfile
+    depends_on:
+      - sqldata
+

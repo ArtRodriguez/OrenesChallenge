@@ -16,12 +16,22 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ConnectionString=${VEHICLES_SERVICE_DB:-Server=sqldata;Database=VehicleServiceDb;User Id=sa;Password=Pass@word}
     ports:
-      - "80"
-      - "443"
+      - "5010:80"
+      - "5011:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-
+  idp:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ConnectionString=${IDP_DB:-Server=sqldata;Database=IdpDb;User Id=sa;Password=Pass@word}
+    ports:
+      - "5020:80"
+      - "5021:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 volumes:
   vehicles-sqldata:
     external: false
