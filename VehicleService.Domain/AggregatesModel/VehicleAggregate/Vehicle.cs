@@ -37,6 +37,10 @@ namespace VehicleService.Domain.AggregatesModel.VehicleAggregate
         /// <param name="longitude"></param>
         public void UpdateLocation(double latitude, double longitude)
         {
+            if(Latitude == latitude && Longitude == longitude)
+            {
+                return;
+            }
             Latitude = latitude;
             Longitude = longitude;
             UpdatedAt = DateTime.Now;
@@ -52,17 +56,17 @@ namespace VehicleService.Domain.AggregatesModel.VehicleAggregate
         {
             // Domain rule: a vehicle cannot have more than 50 orders
             // Check capacity
-            if (_orders.Count >= 50)
+            if (MaxCapacityReached())
             {
                 throw new FullVehicleDomainException($"Vehicle {Id} is full and cannot accept new orders");
             }
             var order = new Order(Id, trackingCode);
             _orders.Add(order);
-        }
-
-        public void RemoveOrderByTrackingCode(string trackingCode)
+        }      
+        
+        public virtual bool MaxCapacityReached()
         {
-            _orders.Remove(_orders.Find(x => x.TrackingCode == trackingCode));
+            return _orders?.Count >= 50;
         }
     }
 }

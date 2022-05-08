@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace VehicleService.API.Application.Queries.Orders
+﻿namespace VehicleService.API.Application.Queries.Orders
 {
     public record OrderViewModel
     {

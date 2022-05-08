@@ -17,8 +17,10 @@ namespace VehicleService.API.Application.Commands.InsertOrder
         }
 
         [DataMember]
+        [Required]
         public int VehicleId { get; set; }
         [DataMember]
+        [Required]
         [MaxLength(20)]
         public string TrackingCode { get; set; }
     }
