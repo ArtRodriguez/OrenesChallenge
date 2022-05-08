@@ -8,8 +8,8 @@ namespace ClientAppMvc.Services
 {
     public interface IVehicleService
     {
-        Task<IEnumerable<VehicleDto>> GetVehicles();
-        Task UpdateLocation(int vehicleId, double latitude, double longitude);
-        Task UpdateLocation(UpdateLocationRequest request);
+        Task<IEnumerable<VehicleDto>> GetVehiclesAsync();
+        Task UpdateLocationAsync(int vehicleId, double latitude, double longitude);
+        Task UpdateLocationAsync(UpdateLocationRequest request);
     }
 }

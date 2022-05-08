@@ -9,6 +9,7 @@
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
+                    <td>VehicleId</td>
                     <td>License Plate</td>
                     <td>Num Orders</td>
                     <td>Latitude</td>
@@ -18,12 +19,13 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.LicensePlate</td>
-                        <td>@item.NumOrders</td>
-                        <td>@item.Latitude</td>
-                        <td>@item.Longitude</td>
-                    </tr>
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.LicensePlate</td>
+                    <td>@item.NumOrders</td>
+                    <td>@item.Latitude</td>
+                    <td>@item.Longitude</td>
+                </tr>
                 }
             </tbody>
         </table>

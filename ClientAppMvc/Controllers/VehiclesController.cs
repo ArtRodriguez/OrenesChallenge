@@ -19,14 +19,14 @@ namespace ClientAppMvc.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _vehicleService.GetVehicles());
+            return View(await _vehicleService.GetVehiclesAsync());
         }
        
 
         [HttpPost]
         public async Task<IActionResult> UpdateLocation([FromBody]UpdateLocationRequest request)
         {
-            await _vehicleService.UpdateLocation(request);
+            await _vehicleService.UpdateLocationAsync(request);
             return Ok();
         }
     }

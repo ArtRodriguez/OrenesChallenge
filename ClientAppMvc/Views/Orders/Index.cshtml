@@ -5,3 +5,96 @@
 
 <h1>Orders</h1>
 
+<div class="row">
+    <div class="col-3">
+        <div class="form-group">
+            <label>VehicleId</label>
+            <input id="vehicleIdInput" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Tracking Code</label>
+            <input id="insertInput" class="form-control" />
+        </div>
+        <div>
+            <input type="button" class="btn btn-info" onclick="insertOrder()" value="Insert" />
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="form-group">
+            <label>Tracking Code</label>
+            <input id="deleteInput" class="form-control" />
+        </div>
+        <div>
+            <input type="button" class="btn btn-danger" onclick="deleteOrder()" value="Delete" />
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="form-group">
+            <label>Tracking Code</label>
+            <input id="getInput" class="form-control" />
+        </div>
+        <div>
+            <input type="button" class="btn btn-dark" onclick="getOrder()" value="Get" />
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <script>
+        function insertOrder() {
+            let vehicleId = $("#vehicleIdInput").val();
+            let insertInput = $("#insertInput").val();
+            
+            if (!vehicleId || !insertInput) {
+                alert("Please, all the fields are required");
+                return;
+            }
+            let data = {
+                VehicleId: parseInt(vehicleId),
+                TrackingCode: insertInput                
+            };
+            $.ajax({
+                url: "/Orders/InsertOrder",
+                method: "POST",
+                data: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                success: function (response) {
+                    location.reload();
+                }
+            });
+        }
+
+        function deleteOrder() {            
+            let deleteInput = $("#deleteInput").val();
+
+            if (!deleteInput) {
+                alert("Please, all the fields are required");
+                return;
+            }
+            
+            $.ajax({
+                url: "/Orders/DeleteOrder/" + deleteInput,
+                method: "DELETE",                
+                success: function (response) {
+                    alert("Deleted");                    
+                }
+            });
+        }
+
+        function getOrder() {
+            let getInput = $("#getInput").val();
+
+            if (!getInput) {
+                alert("Please, all the fields are required");
+                return;
+            }
+            $.getJSON("/Orders/GetByTrackingCode/" + getInput).done(response => {
+                alert(`Location: ${response.latitude} - ${response.longitude}`);
+            });
+            
+        }
+    </script>
+}
+
