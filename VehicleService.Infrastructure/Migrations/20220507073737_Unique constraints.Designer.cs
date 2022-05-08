@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VehicleService.Infrastructure;
 
 namespace VehicleService.Infrastructure.Migrations
 {
     [DbContext(typeof(VehicleServiceContext))]
-    partial class VehicleServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20220507073737_Unique constraints")]
+    partial class Uniqueconstraints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,12 +42,17 @@ namespace VehicleService.Infrastructure.Migrations
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("VehicleId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TrackingCode")
                         .IsUnique();
 
                     b.HasIndex("VehicleId");
+
+                    b.HasIndex("VehicleId1");
 
                     b.ToTable("Orders");
                 });
@@ -72,9 +79,14 @@ namespace VehicleService.Infrastructure.Migrations
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("VehicleId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("VehicleId");
+
+                    b.HasIndex("VehicleId1");
 
                     b.ToTable("HistoricalLocations");
                 });
@@ -114,111 +126,119 @@ namespace VehicleService.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 408, DateTimeKind.Local).AddTicks(3142),
+                            CreatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 993, DateTimeKind.Local).AddTicks(1916),
                             Latitude = 0.0,
                             LicensePlate = "0001",
                             Longitude = 0.0,
-                            UpdatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 410, DateTimeKind.Local).AddTicks(5940)
+                            UpdatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(224)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5356),
+                            CreatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9480),
                             Latitude = 0.0,
                             LicensePlate = "0002",
                             Longitude = 0.0,
-                            UpdatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5374)
+                            UpdatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9496)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5526),
+                            CreatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9650),
                             Latitude = 0.0,
                             LicensePlate = "0003",
                             Longitude = 0.0,
-                            UpdatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5531)
+                            UpdatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9654)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5560),
+                            CreatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9683),
                             Latitude = 0.0,
                             LicensePlate = "0004",
                             Longitude = 0.0,
-                            UpdatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5563)
+                            UpdatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9686)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5580),
+                            CreatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9707),
                             Latitude = 0.0,
                             LicensePlate = "0005",
                             Longitude = 0.0,
-                            UpdatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5583)
+                            UpdatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9709)
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5605),
+                            CreatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9733),
                             Latitude = 0.0,
                             LicensePlate = "0006",
                             Longitude = 0.0,
-                            UpdatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5608)
+                            UpdatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9736)
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5667),
+                            CreatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9753),
                             Latitude = 0.0,
                             LicensePlate = "0007",
                             Longitude = 0.0,
-                            UpdatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5670)
+                            UpdatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9756)
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5690),
+                            CreatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9773),
                             Latitude = 0.0,
                             LicensePlate = "0008",
                             Longitude = 0.0,
-                            UpdatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5693)
+                            UpdatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9775)
                         },
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5709),
+                            CreatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9793),
                             Latitude = 0.0,
                             LicensePlate = "0009",
                             Longitude = 0.0,
-                            UpdatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5711)
+                            UpdatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9795)
                         },
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5729),
+                            CreatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9907),
                             Latitude = 0.0,
                             LicensePlate = "0010",
                             Longitude = 0.0,
-                            UpdatedAt = new DateTime(2022, 5, 8, 1, 2, 9, 411, DateTimeKind.Local).AddTicks(5732)
+                            UpdatedAt = new DateTime(2022, 5, 7, 9, 37, 36, 996, DateTimeKind.Local).AddTicks(9911)
                         });
                 });
 
             modelBuilder.Entity("VehicleService.Domain.AggregatesModel.OrderAggregate.Order", b =>
                 {
                     b.HasOne("VehicleService.Domain.AggregatesModel.VehicleAggregate.Vehicle", null)
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("VehicleService.Domain.AggregatesModel.VehicleAggregate.Vehicle", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("VehicleId1");
                 });
 
             modelBuilder.Entity("VehicleService.Domain.AggregatesModel.VehicleAggregate.HistoricalLocation", b =>
                 {
                     b.HasOne("VehicleService.Domain.AggregatesModel.VehicleAggregate.Vehicle", null)
-                        .WithMany("HistoricalLocations")
+                        .WithMany()
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("VehicleService.Domain.AggregatesModel.VehicleAggregate.Vehicle", null)
+                        .WithMany("HistoricalLocations")
+                        .HasForeignKey("VehicleId1");
                 });
 
             modelBuilder.Entity("VehicleService.Domain.AggregatesModel.VehicleAggregate.Vehicle", b =>

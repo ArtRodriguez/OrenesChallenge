@@ -7,6 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using VehicleService.API.Application.Queries.Vehicles;
+using VehicleService.API.Application.Commands.UpdateVehicleLocation;
+using MediatR;
 
 namespace VehicleService.API.Controllers
 {    
@@ -15,17 +17,30 @@ namespace VehicleService.API.Controllers
     public class VehiclesController : ControllerBase
     {
         private readonly ILogger<VehiclesController> _logger;
-        public VehiclesController(ILogger<VehiclesController> logger)
+        private readonly IMediator _mediator;
+        private readonly IVehicleQueries _vehicleQueries;
+        public VehiclesController(ILogger<VehiclesController> logger, IMediator mediator, IVehicleQueries vehicleQueries)
         {
             _logger = logger;
+            _mediator = mediator;
+            _vehicleQueries = vehicleQueries;
         }
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<VehicleViewModel>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<VehicleViewModel>>> GetVehiclesAsync()
         {
-            return Ok(Enumerable.Empty<VehicleViewModel>());
+            return Ok(await _vehicleQueries.GetVehiclesAsync());
         }
 
+        [HttpPut("Location")]
+        public async Task<IActionResult> UpdateVehicleLocation([FromBody] UpdateVehicleLocationCommand command)
+        {
+            if(await _mediator.Send(command))
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using VehicleService.API.Application.Commands.UpdateVehicleLocation;
+using VehicleService.API.Application.DomainEventHandlers.VehicleLocationUpdated;
 
 namespace VehicleService.API.Infrastructure.AutofacModules
 {
@@ -18,7 +19,7 @@ namespace VehicleService.API.Infrastructure.AutofacModules
             builder.RegisterAssemblyTypes(typeof(UpdateVehicleLocationCommand).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             // Register the DomainEventHandler classes (they implement INotificationHandler<>) in assembly holding the Domain Events
-            //builder.RegisterAssemblyTypes(typeof(MrpvUpdatedDomainEventHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(INotificationHandler<>));
+            builder.RegisterAssemblyTypes(typeof(VehicleLocationUpdatedDomainEventHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(INotificationHandler<>));
 
             builder.Register<ServiceFactory>(context =>
             {

@@ -32,17 +32,9 @@ namespace VehicleService.API
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {            
             // Database
-            const string DB_ENV = "ConnectionString";
-            string db_conn_str = Environment.GetEnvironmentVariable(DB_ENV);
-
-            if (db_conn_str == null)
-            {                
-                db_conn_str = Configuration.GetConnectionString("DefaultConnection");
-            }
-            // Database
-            services.AddDbContext<VehicleServiceContext>(opt => opt.UseSqlServer(db_conn_str));
+            services.AddDbContext<VehicleServiceContext>(opt => opt.UseSqlServer(GetConnectionString()));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -50,13 +42,14 @@ namespace VehicleService.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "VehicleService.API", Version = "v1" });
             });
 
-            services.AddTransient<IVehicleRepository, VehicleRepository>();
+            services.AddTransient<IVehicleRepository, VehicleRepository>();            
             services.AddTransient<IOrderRepository, OrderRepository>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
-        {
+        {           
             builder.RegisterModule(new MediatorModule());
+            builder.RegisterModule(new ApplicationModule(GetConnectionString()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,6 +73,18 @@ namespace VehicleService.API
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private string GetConnectionString()
+        {
+            const string DB_ENV = "ConnectionString";
+            string connectionString = Environment.GetEnvironmentVariable(DB_ENV);
+
+            if (connectionString == null)
+            {
+                connectionString = Configuration.GetConnectionString("DefaultConnection");
+            }
+            return connectionString;
         }
     }
 }

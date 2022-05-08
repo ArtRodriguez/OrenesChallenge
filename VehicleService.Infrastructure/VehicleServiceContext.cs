@@ -34,7 +34,18 @@ namespace VehicleService.Infrastructure
         {
             modelBuilder.ApplyConfiguration(new VehicleEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OrderEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new HistoricalLocationEntityTypeConfiguration());            
+            modelBuilder.ApplyConfiguration(new HistoricalLocationEntityTypeConfiguration());
+
+            // Initial data
+            for (int i = 1; i <= 10; i++)
+            {
+                var vehicle = new Vehicle(i, 0, 0, $"{i}".PadLeft(4, '0'))
+                {
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+                modelBuilder.Entity<Vehicle>().HasData(vehicle);
+            }
 
             base.OnModelCreating(modelBuilder);
         }

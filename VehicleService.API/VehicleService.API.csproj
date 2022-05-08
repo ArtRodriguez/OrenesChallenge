@@ -26,9 +26,4 @@
     <ProjectReference Include="..\VehicleService.Infrastructure\VehicleService.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Application\Commands\InsertOrder\" />
-    <Folder Include="Application\Commands\DeleteOrder\" />
-  </ItemGroup>
-
 </Project>

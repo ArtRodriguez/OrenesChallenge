@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace VehicleService.Infrastructure.Repositories
         public VehicleRepository(VehicleServiceContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
-        }        
+        }
 
         public Vehicle Add(Vehicle vehicle)
         {
@@ -30,7 +31,7 @@ namespace VehicleService.Infrastructure.Repositories
 
         public async Task<Vehicle> GetAsync(int vehicleId)
         {
-            return await _context.Vehicles.FindAsync(vehicleId);
+            return await _context.Vehicles.Include(v => v.Orders).FirstOrDefaultAsync(v => v.Id == vehicleId);
         }
 
         public Vehicle Update(Vehicle vehicle)

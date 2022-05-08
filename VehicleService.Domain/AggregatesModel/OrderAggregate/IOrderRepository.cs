@@ -13,5 +13,6 @@ namespace VehicleService.Domain.AggregatesModel.OrderAggregate
         Order Update(Order order);
         void Delete(Order order);
         Task<Order> GetAsync(int orderId);
+        Task<Order> GetByTrackingCodeAsync(string trackingCode);
     }
 }

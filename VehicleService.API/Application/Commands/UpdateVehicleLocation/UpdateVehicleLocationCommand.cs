@@ -9,14 +9,14 @@ namespace VehicleService.API.Application.Commands.UpdateVehicleLocation
 {
     public class UpdateVehicleLocationCommand : IRequest<bool>
     {
-        public UpdateVehicleLocationCommand(int id, double latitude, double longitude)
+        public UpdateVehicleLocationCommand(int VehicleId, double latitude, double longitude)
         {
-            Id = id;
+            this.VehicleId = VehicleId;
             Latitude = latitude;
             Longitude = longitude;
         }
         [DataMember]
-        public int Id { get; set; }
+        public int VehicleId { get; set; }
         [DataMember]
         public double Latitude { get; set; }
         [DataMember]

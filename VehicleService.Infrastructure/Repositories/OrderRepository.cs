@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using VehicleService.Domain.AggregatesModel.OrderAggregate;
 using VehicleService.Domain.SeedWork;
@@ -43,6 +41,11 @@ namespace VehicleService.Infrastructure.Repositories
         {
             order.UpdatedAt = DateTime.Now;
             return _context.Orders.Update(order).Entity;
+        }
+
+        public async Task<Order> GetByTrackingCodeAsync(string trackingCode)
+        {
+            return await _context.Orders.FirstOrDefaultAsync(x => x.TrackingCode == trackingCode);
         }
     }
 }
