@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 using VehicleService.API.Application.Queries.Vehicles;
 using VehicleService.API.Application.Commands.UpdateVehicleLocation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VehicleService.API.Controllers
 {    
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize]
     public class VehiclesController : ControllerBase
     {
         private readonly ILogger<VehiclesController> _logger;

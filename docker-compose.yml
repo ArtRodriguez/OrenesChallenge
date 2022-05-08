@@ -12,6 +12,7 @@ services:
       dockerfile: VehicleService.API/Dockerfile
     depends_on:
       - sqldata
+      - idp
 
   idp:
     image: ${DOCKER_REGISTRY-}idp
@@ -19,5 +20,15 @@ services:
       context: .
       dockerfile: Idp/Dockerfile
     depends_on:
-      - sqldata
-
+      - sqldata 
+  clientappmvc:
+    image: ${DOCKER_REGISTRY-}clientappmvc
+    build:
+      context: .
+      dockerfile: ClientAppMvc/Dockerfile
+    ports:
+      - "5030:80"      
+      - "5031:443"      
+    depends_on:
+      - idp
+      - vehicleservice.api

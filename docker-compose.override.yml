@@ -10,28 +10,43 @@ services:
     volumes:
       - vehicles-sqldata:/var/opt/mssql
 
+  clientappmvc:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - IdentityServerSettings__DiscoveryUrl=http://${IDENTITY_AUTHORITY:-idp}
+      - IdentityServerSettings__ClientName=m2m.client
+      - IdentityServerSettings__ClientPassword=511536EF-F270-4058-80CA-1C89C192F69A
+      - IdentityServerSettings__UseHttps=false
   vehicleservice.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ConnectionString=${VEHICLES_SERVICE_DB:-Server=sqldata;Database=VehicleServiceDb;User Id=sa;Password=Pass@word}
+      - IdentityAuthority=http://${IDENTITY_AUTHORITY:-idp}
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=@12345Aa
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx 
     ports:
       - "5010:80"
       - "5011:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ~/.aspnet/https:/https:ro
   idp:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ConnectionString=${IDP_DB:-Server=sqldata;Database=IdpDb;User Id=sa;Password=Pass@word}
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=@12345Aa
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx      
     ports:
       - "5020:80"
       - "5021:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ~/.aspnet/https:/https:ro
 volumes:
   vehicles-sqldata:
     external: false

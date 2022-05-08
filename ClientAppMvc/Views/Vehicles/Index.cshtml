@@ -1,0 +1,78 @@
+﻿@model List<ClientAppMvc.Models.VehicleDto>
+@{
+    ViewData["Title"] = "Vehicles";
+}
+
+<h1>Vehicles</h1>
+<div class="row">
+    <div class="col-lg-6">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <td>License Plate</td>
+                    <td>Num Orders</td>
+                    <td>Latitude</td>
+                    <td>Longitude</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.LicensePlate</td>
+                        <td>@item.NumOrders</td>
+                        <td>@item.Latitude</td>
+                        <td>@item.Longitude</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-3">
+        <div class="form-group">
+            <label>VehicleId</label>
+            <input id="vehicleIdInput" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Latitude</label>
+            <input id="latitudeInput" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Longitude</label>
+            <input id="longitudeInput" class="form-control" />
+        </div>
+        <div>
+            <input type="button" class="btn btn-info" onclick="updateLocation()" value="Send" />
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        function updateLocation() {
+            let vehicleId = $("#vehicleIdInput").val();
+            let latitude = $("#latitudeInput").val();
+            let longitude = $("#longitudeInput").val();
+            if (!vehicleId || !latitude || !longitude) {
+                alert("Please, all the fields are required");
+                return;
+            }
+            let data = {
+                VehicleId: parseInt(vehicleId),
+                Latitude: parseFloat(latitude),
+                Longitude: parseFloat(longitude)
+            };
+            $.ajax({
+                url: "/Vehicles/UpdateLocation",
+                method: "POST",
+                data: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                success: function (response) {
+                    location.reload();
+                }
+            });
+        }
+    </script>
+}
+

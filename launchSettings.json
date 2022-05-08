@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "composeLaunchServiceName": "clientappmvc",
+      "serviceActions": {
+        "clientappmvc": "StartDebugging",
+        "idp": "StartDebugging",
+        "sqldata": "StartWithoutDebugging",
+        "vehicleservice.api": "StartDebugging"
+      },
+      "composeLaunchAction": "LaunchBrowser",
+      "commandVersion": "1.0",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}"
+    }
+  }
+}

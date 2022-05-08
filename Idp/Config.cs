@@ -24,9 +24,14 @@ namespace Idp
                 new ApiScope(VEHICLE_SERVICE_READ_SCOPE),
                 new ApiScope(VEHICLE_SERVICE_WRITE_SCOPE),
             };
-        public static IEnumerable<ApiResource> ApiResources => new ApiResource[] 
-        { 
-
+        public static IEnumerable<ApiResource> ApiResources => new ApiResource[]
+        {
+            new ApiResource("vehicleservice")
+            {
+                Scopes = new List<string> { "vehicleservice.read", "vehicleservice.write"},
+                ApiSecrets = new List<Secret> {new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256())},
+                UserClaims = new List<string> {"role"}
+            }
         };
         public static IEnumerable<Client> Clients =>
             new Client[]
@@ -40,7 +45,7 @@ namespace Idp
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
 
-                    AllowedScopes = { VEHICLE_SERVICE_READ_SCOPE, VEHICLE_SERVICE_WRITE_SCOPE }
+                    AllowedScopes = { "openid", "profile", VEHICLE_SERVICE_READ_SCOPE, VEHICLE_SERVICE_WRITE_SCOPE }
                 },
 
                 // interactive client using code flow + pkce

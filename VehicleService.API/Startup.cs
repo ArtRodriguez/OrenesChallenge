@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
@@ -32,9 +33,16 @@ namespace VehicleService.API
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {            
+        {
             // Database
             services.AddDbContext<VehicleServiceContext>(opt => opt.UseSqlServer(GetConnectionString()));
+            IdentityModelEventSource.ShowPII = true;
+            services.AddAuthentication("Bearer").AddIdentityServerAuthentication("Bearer", options =>
+            {
+                options.ApiName = "vehicleservice";
+                options.Authority = GetIdentityAuthority();
+                options.RequireHttpsMetadata = false;
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -42,12 +50,12 @@ namespace VehicleService.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "VehicleService.API", Version = "v1" });
             });
 
-            services.AddTransient<IVehicleRepository, VehicleRepository>();            
+            services.AddTransient<IVehicleRepository, VehicleRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
-        {           
+        {
             builder.RegisterModule(new MediatorModule());
             builder.RegisterModule(new ApplicationModule(GetConnectionString()));
         }
@@ -63,10 +71,11 @@ namespace VehicleService.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VehicleService.API v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -85,6 +94,17 @@ namespace VehicleService.API
                 connectionString = Configuration.GetConnectionString("DefaultConnection");
             }
             return connectionString;
+        }
+        private string GetIdentityAuthority()
+        {
+            const string ID_ENV = "IdentityAuthority";
+            string identityAuthority = Environment.GetEnvironmentVariable(ID_ENV);
+
+            if (identityAuthority == null)
+            {
+                identityAuthority = Configuration.GetValue<string>(ID_ENV);
+            }
+            return identityAuthority;
         }
     }
 }
