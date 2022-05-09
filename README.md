@@ -77,7 +77,9 @@ Domain entities:
 ### VehicleService.Infrastructure
 Class library project that encapsulates the logic to communicate to external systems like databases. Here we implemented the repositories and context to communicate to a SQL Server database using EF Core.
 
-A mediator extension method has been also implemented in order to manage domain events before a domain entitie persists.
+This layer also implements the queries for the read model using Dapper ORM.
+
+A mediator extension method has been also implemented in order to manage domain events before a domain entity persists.
 
 
 ## SQL Server
