@@ -1,6 +1,6 @@
-﻿namespace VehicleService.API.Application.Queries.Orders
+﻿namespace VehicleService.Infrastructure.Queries.Orders
 {
-    public record OrderViewModel
+    public record OrderDto
     {
         public int VehicleId { get; set; }
         public string LicensePlate { get; set; }

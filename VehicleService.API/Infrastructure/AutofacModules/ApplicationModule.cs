@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VehicleService.API.Application.Queries.Orders;
-using VehicleService.API.Application.Queries.Vehicles;
+using VehicleService.Infrastructure.Queries.Orders;
+using VehicleService.Infrastructure.Queries.Vehicles;
 
 namespace VehicleService.API.Infrastructure.AutofacModules
 {

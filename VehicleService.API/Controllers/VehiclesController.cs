@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using VehicleService.API.Application.Queries.Vehicles;
+using VehicleService.Infrastructure.Queries.Vehicles;
 using VehicleService.API.Application.Commands.UpdateVehicleLocation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -29,8 +29,8 @@ namespace VehicleService.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<VehicleViewModel>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<VehicleViewModel>>> GetVehiclesAsync()
+        [ProducesResponseType(typeof(IEnumerable<VehicleDto>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<VehicleDto>>> GetVehiclesAsync()
         {
             return Ok(await _vehicleQueries.GetVehiclesAsync());
         }

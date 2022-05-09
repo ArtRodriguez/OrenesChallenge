@@ -1,6 +1,6 @@
-﻿namespace VehicleService.API.Application.Queries.Vehicles
+﻿namespace VehicleService.Infrastructure.Queries.Vehicles
 {
-    public record VehicleViewModel
+    public record VehicleDto
     {
         public int Id { get; set; }
         public string  LicensePlate { get; set; }

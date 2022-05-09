@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.SqlClient;
 
-namespace VehicleService.API.Application.Queries.Vehicles
+namespace VehicleService.Infrastructure.Queries.Vehicles
 {
     public class VehicleQueries : IVehicleQueries
     {
@@ -16,7 +16,7 @@ namespace VehicleService.API.Application.Queries.Vehicles
             _connectionString = !string.IsNullOrWhiteSpace(connectionString) ? connectionString : throw new ArgumentNullException(nameof(connectionString)); ;
         }
 
-        public async Task<IEnumerable<VehicleViewModel>> GetVehiclesAsync()
+        public async Task<IEnumerable<VehicleDto>> GetVehiclesAsync()
         {
             string query = @"with numOrders as (
 									select
@@ -39,7 +39,7 @@ namespace VehicleService.API.Application.Queries.Vehicles
 									left join numOrders n on n.VehicleId = v.Id";
             using (var connection = new SqlConnection(_connectionString))
             {
-				return await connection.QueryAsync<VehicleViewModel>(query);
+				return await connection.QueryAsync<VehicleDto>(query);
             }            
         }
     }

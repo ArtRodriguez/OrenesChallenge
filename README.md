@@ -31,7 +31,7 @@ Suggestion: WebHooks? MQTT?
 | ClientAppMVc   | 5030       |
 
 Use Visual Studio to debug the solution 
->Note: if the ClientAppMvc raise an exception at the beginning when trying to connect to the Idp or VehicleService, maybe one of those is not up yet (despite of the "depends_on" tag in the docker-compose config). Try to refresh the browser. It should work in a few seconds. 
+>Note: if the ClientAppMvc raises an exception at the beginning when trying to connect to the Idp or VehicleService, maybe one of those is not up yet (despite of the "depends_on" tag in the docker-compose config). Try to refresh the browser. It should work in a few seconds. 
 
 or run this command at the same directory of docker-compose.yml file
 ```
@@ -47,12 +47,13 @@ http://localhost:5030/
 ## VehicleService
 Backend service with Domain-Driven Design architecture. 
 ### VehicleService.API
-Main project of the component. WebAPI project that exposes endpoints to manage Vehicle and Orders. It uses a mediator pattern (MediatR implementation) to communicate the request to the application layer. Every use case is managed by a command handler or a query at application level.
+Main project of the component. WebAPI project that exposes endpoints to manage Vehicle and Orders. It uses a mediator pattern (MediatR implementation) to communicate the request to the application layer. Every use case is managed by a command handler or a query .
 It implements a CQRS pattern to separate the model for insert/update/delete information from the model to read information.
 
 The Insert/Update/Delete model is implemented using commands and command handlers. These handlers communicate with Domain layer using the repository implementations at infrastructure level
 
-The read model is implemented using the Dapper ORM to improve the performance of the queries.
+The read model is implemented using the Dapper ORM to improve the performance of the queries. 
+>Note: Unlike the Microsoft reference for a DDD architecture, in this solution the queries are implemented at infrastructure level. This way the API layer is not coupled to the underlying database technology.
 
 Also at application level, it is implemented the domain event handlers, so that every time a domain entity raises a domain event, the application layer can handle it, for example, to communicate to external systems.
 

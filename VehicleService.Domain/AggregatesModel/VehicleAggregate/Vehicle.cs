@@ -41,11 +41,13 @@ namespace VehicleService.Domain.AggregatesModel.VehicleAggregate
             {
                 return;
             }
+            var previousLatitude = Latitude;
+            var previousLongitude = Longitude;
             Latitude = latitude;
             Longitude = longitude;
             UpdatedAt = DateTime.Now;
             _historicalLocations.Add(new HistoricalLocation(Id, latitude, longitude));
-            AddDomainEvent(new VehicleLocationUpdatedDomainEvent(this));
+            AddDomainEvent(new VehicleLocationUpdatedDomainEvent(this, previousLatitude, previousLongitude));
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using VehicleService.API.Application.Commands.DeleteOrder;
 using VehicleService.API.Application.Commands.InsertOrder;
-using VehicleService.API.Application.Queries.Orders;
+using VehicleService.Infrastructure.Queries.Orders;
 
 namespace VehicleService.API.Controllers
 {
@@ -29,8 +29,8 @@ namespace VehicleService.API.Controllers
             _orderQueries = orderQueries;
         }
         [HttpGet("{trackingCode}")]
-        [ProducesResponseType(typeof(IEnumerable<OrderViewModel>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<OrderViewModel>>> GetAsync(string trackingCode)
+        [ProducesResponseType(typeof(IEnumerable<OrderDto>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<OrderDto>>> GetAsync(string trackingCode)
         {
             return Ok(await _orderQueries.GetOrderByTrackingCodeAsync(trackingCode));
         }

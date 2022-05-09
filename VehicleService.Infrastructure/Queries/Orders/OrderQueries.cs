@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.SqlClient;
 
-namespace VehicleService.API.Application.Queries.Orders
+namespace VehicleService.Infrastructure.Queries.Orders
 {
     public class OrderQueries : IOrderQueries
     {
@@ -13,7 +13,7 @@ namespace VehicleService.API.Application.Queries.Orders
         {
             _connectionString = !string.IsNullOrWhiteSpace(connectionString) ? connectionString : throw new ArgumentNullException(nameof(connectionString)); ;
         }
-        public async Task<OrderViewModel> GetOrderByTrackingCodeAsync(string trackingCode)
+        public async Task<OrderDto> GetOrderByTrackingCodeAsync(string trackingCode)
         {
             string query = @"select
 								o.Id as OrderId
@@ -29,7 +29,7 @@ namespace VehicleService.API.Application.Queries.Orders
 								o.TrackingCode = @TrackingCode";
             using (var connection = new SqlConnection(_connectionString))
             {
-                return await connection.QuerySingleAsync<OrderViewModel>(query, new { TrackingCode = trackingCode });
+                return await connection.QuerySingleAsync<OrderDto>(query, new { TrackingCode = trackingCode });
             }
         }
     }
