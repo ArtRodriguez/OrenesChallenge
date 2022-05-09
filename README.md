@@ -53,6 +53,14 @@ The read model is implemented using the Dapper ORM to improve the performance of
 
 Also at application level, it is implemented the domain event handlers, so that every time a domain entity raises a domain event, the application layer can handle it, for example, to communicate to external systems.
 
+The component is secured so that the endpoints need a bearer token validate by the Idp service to be used.
+
+Endpoints documentation can be found at:
+```
+http://localhost:5010/swagger/index.html
+https://localhost:5011/swagger/index.html
+```
+
 ### VehicleService.Domain
 Class library project that encapsulates the business domain. It defines the business logic, the domain entities and the interfaces to communicate to other layers.
 All entities implement the Entity abstract class and only the entities that implement the IAggregateRoot interface can persist on its own.
