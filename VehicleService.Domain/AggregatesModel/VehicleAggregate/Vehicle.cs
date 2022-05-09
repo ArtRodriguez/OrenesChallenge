@@ -26,8 +26,8 @@ namespace VehicleService.Domain.AggregatesModel.VehicleAggregate
         public Vehicle(int id, double latitude, double longitude, string licensePlate) : this()
         {
             Id = id;
-            Latitude = latitude;
-            Longitude = longitude;
+            Latitude = CheckLatitude(latitude);
+            Longitude = CheckLongitude(longitude);            
             LicensePlate = licensePlate;
         }
         /// <summary>
@@ -37,7 +37,7 @@ namespace VehicleService.Domain.AggregatesModel.VehicleAggregate
         /// <param name="longitude"></param>
         public void UpdateLocation(double latitude, double longitude)
         {
-            if(Latitude == latitude && Longitude == longitude)
+            if(Latitude == CheckLatitude(latitude) && Longitude == CheckLongitude(longitude))
             {
                 return;
             }
@@ -72,6 +72,23 @@ namespace VehicleService.Domain.AggregatesModel.VehicleAggregate
         public virtual bool MaxCapacityReached()
         {
             return _orders?.Count >= 50;
+        }
+
+        private double CheckLatitude(double latitude)
+        {
+            if (latitude > 90 || latitude < -90)
+            {
+                throw new ArgumentException(nameof(latitude));
+            }
+            return latitude;
+        }
+        private double CheckLongitude(double longitude)
+        {
+            if (longitude > 180 || longitude < -180)
+            {
+                throw new ArgumentException(nameof(longitude));
+            }
+            return longitude;
         }
     }
 }
