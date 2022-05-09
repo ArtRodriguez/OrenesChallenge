@@ -30,7 +30,10 @@ Suggestion: WebHooks? MQTT?
 | Id. Service    | 5020, 5021 |
 | ClientAppMVc   | 5030       |
 
-Run this command at the same directory of docker-compose.yml file
+Use Visual Studio to debug the solution 
+>Note: if the ClientAppMvc raise an exception at the beginning when trying to connect to the Idp or VehicleService, maybe one of those is not up yet (despite of the "depends_on" tag in the docker-compose config). Try to refresh the browser. It should work in a few seconds. 
+
+or run this command at the same directory of docker-compose.yml file
 ```
 docker-compose build
 docker-compose up -d
