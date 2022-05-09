@@ -20,6 +20,8 @@ Suggestion: WebHooks? MQTT?
 * .NET 5
 * Docker / Docker Compose
 * Open ports in localhost:
+
+
 | Component      |      Ports |
 |----------------|------------|
 | VehicleService | 5010, 5011 |
