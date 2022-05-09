@@ -27,8 +27,7 @@ services:
       context: .
       dockerfile: ClientAppMvc/Dockerfile
     ports:
-      - "5030:80"      
-      - "5031:443"      
+      - "5030:80"
     depends_on:
       - idp
       - vehicleservice.api

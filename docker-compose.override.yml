@@ -13,7 +13,7 @@ services:
   clientappmvc:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80
       - IdentityServerSettings__DiscoveryUrl=http://${IDENTITY_AUTHORITY:-idp}
       - IdentityServerSettings__ClientName=m2m.client
       - IdentityServerSettings__ClientPassword=511536EF-F270-4058-80CA-1C89C192F69A

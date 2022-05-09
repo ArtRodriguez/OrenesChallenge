@@ -18,6 +18,7 @@ Suggestion: WebHooks? MQTT?
 # Solution
 ## Requirements
 * .NET 5
+* Visual Studio 2019
 * Docker / Docker Compose
 * Open ports in localhost:
 
@@ -26,5 +27,66 @@ Suggestion: WebHooks? MQTT?
 |----------------|------------|
 | VehicleService | 5010, 5011 |
 | SQL Server     | 5434       |
-| Idp            | 5020, 5021 |
-| ClientAppMVc   | 5030, 5031 |
+| Id. Service    | 5020, 5021 |
+| ClientAppMVc   | 5030       |
+
+Run this command at the same directory of docker-compose.yml file
+```
+docker-compose build
+docker-compose up -d
+```
+You should be able to browse the ClientAppMvc using this URL:
+```
+http://localhost:5030/
+```
+
+# Components
+## VehicleService
+Backend service with Domain-Driven Design architecture. 
+### VehicleService.API
+Main project of the component. WebAPI project that exposes endpoints to manage Vehicle and Orders. It uses a mediator pattern (MediatR implementation) to communicate the request to the application layer. Every use case is managed by a command handler or a query at application level.
+It implements a CQRS pattern to separate the model for insert/update/delete information from the model to read information.
+
+The Insert/Update/Delete model is implemented using commands and command handlers. These handlers communicate with Domain layer using the repository implementations at infrastructure level
+
+The read model is implemented using the Dapper ORM to improve the performance of the queries.
+
+Also at application level, it is implemented the domain event handlers, so that every time a domain entity raises a domain event, the application layer can handle it, for example, to communicate to external systems.
+
+### VehicleService.Domain
+Class library project that encapsulates the business domain. It defines the business logic, the domain entities and the interfaces to communicate to other layers.
+All entities implement the Entity abstract class and only the entities that implement the IAggregateRoot interface can persist on its own.
+
+Domain entities:
+* Vehicle
+* Order
+* HistoricalLocation
+
+### VehicleService.Infrastructure
+Class library project that encapsulates the logic to communicate to external systems like databases. Here we implemented the repositories and context to communicate to a SQL Server database using EF Core.
+
+A mediator extension method has been also implemented in order to manage domain events before a domain entitie persists.
+
+
+## SQL Server
+Instance of SQL Server 2019
+sa pass: Pass@word
+
+## Idp
+Identity Service Provider. It was implemented as a machine to machine scenario with client credentials
+
+## ClientAppMvc
+Sample client app to make use of the endpoints exposed by VehicleService API
+
+URLs
+
+List of Vehicles and location updates:
+```
+http://localhost:5030/Vehicles
+```
+
+Add orders, delete orders, and get orders location:
+
+```
+http://localhost:5030/Orders
+```
