@@ -36,17 +36,31 @@ namespace VehicleService.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] InsertOrderCommand command)
         {
-            await _mediator.Send(command);
-            return Ok();
+            if(await _mediator.Send(command))
+            {
+                _logger.LogInformation($"----- Order {command.TrackingCode} inserted in Vehicle {command.VehicleId}");
+                return Ok();
+            }
+            _logger.LogError($"----- Error inserting order {command.TrackingCode} in Vehicle {command.VehicleId}");
+            return BadRequest();
         }
 
         [HttpDelete("{trackingCode}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Delete(string trackingCode)
         {
-            await _mediator.Send(new DeleteOrderCommand(trackingCode));
-            return Ok();
+            if (await _mediator.Send(new DeleteOrderCommand(trackingCode)))
+            {
+                _logger.LogInformation($"----- Order {trackingCode} deleted");
+                return Ok();
+            }
+            _logger.LogError($"----- Error deleting order {trackingCode}");
+            return BadRequest();
         }
     }
 }

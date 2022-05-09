@@ -63,7 +63,10 @@ namespace VehicleService.Domain.AggregatesModel.VehicleAggregate
             var order = new Order(Id, trackingCode);
             _orders.Add(order);
         }      
-        
+        /// <summary>
+        /// Checks if the vehicle reached its max capacity
+        /// </summary>
+        /// <returns></returns>
         public virtual bool MaxCapacityReached()
         {
             return _orders?.Count >= 50;

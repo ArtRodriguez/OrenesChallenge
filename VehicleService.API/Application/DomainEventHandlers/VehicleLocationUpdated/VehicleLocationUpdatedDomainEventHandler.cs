@@ -20,6 +20,7 @@ namespace VehicleService.API.Application.DomainEventHandlers.VehicleLocationUpda
 
         public async Task Handle(VehicleLocationUpdatedDomainEvent notification, CancellationToken cancellationToken)
         {
+            // ToDo: Send integration event to communicate a location change
             _logger.LogInformation($"Location of Vehicle {notification.Vehicle.Id} updated to {notification.Vehicle.Latitude}:{notification.Vehicle.Longitude}");            
         }
     }

@@ -14,3 +14,15 @@ In addition, it is necessary to ensure that the data model allows the vehicle lo
 Instead of forcing customers to query/polling on locations, notify interested parties in real time of each location update.
 
 Suggestion: WebHooks? MQTT?
+
+# Solution
+## Requirements
+.NET 5
+Docker / Docker Compose
+Open ports in localhost:
+| Component      |      Ports |
+|----------------|------------|
+| VehicleService | 5010, 5011 |
+| SQL Server     | 5434       |
+| Idp            | 5020, 5021 |
+| ClientAppMVc   | 5030, 5031 |

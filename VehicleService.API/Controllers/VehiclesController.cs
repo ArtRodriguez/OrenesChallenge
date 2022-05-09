@@ -36,12 +36,16 @@ namespace VehicleService.API.Controllers
         }
 
         [HttpPut("Location")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> UpdateVehicleLocation([FromBody] UpdateVehicleLocationCommand command)
         {
             if(await _mediator.Send(command))
             {
+                _logger.LogInformation($"----- Vehicle {command.VehicleId} Location Updated | Latitude: {command.Latitude} | Longitude {command.Longitude}");
                 return Ok();
             }
+            _logger.LogError($"----- Error updating location of vehicle {command.VehicleId}");
             return BadRequest();
         }
     }
