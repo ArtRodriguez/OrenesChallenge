@@ -9,6 +9,10 @@ services:
       - "5434:1433"
     volumes:
       - vehicles-sqldata:/var/opt/mssql
+  rabbitmq:
+    ports:
+      - "15673:15672"
+      - "5673:5672"
 
   clientappmvc:
     environment:
