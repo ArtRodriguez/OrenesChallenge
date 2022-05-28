@@ -23,8 +23,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
+    <ProjectReference Include="..\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />
     <ProjectReference Include="..\VehicleService.Domain\VehicleService.Domain.csproj" />
     <ProjectReference Include="..\VehicleService.Infrastructure\VehicleService.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Application\IntegrationEvents\EventHandling\" />
   </ItemGroup>
 
 </Project>

@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using VehicleService.API.Application.Commands.UpdateVehicleLocation;
 using VehicleService.API.Application.DomainEventHandlers.VehicleLocationUpdated;
+using VehicleService.API.Behaviors;
 
 namespace VehicleService.API.Infrastructure.AutofacModules
 {
@@ -26,6 +27,8 @@ namespace VehicleService.API.Infrastructure.AutofacModules
                 var componentContext = context.Resolve<IComponentContext>();
                 return t => { object o; return componentContext.TryResolve(t, out o) ? o : null; };
             });
+
+            builder.RegisterGeneric(typeof(TransactionBehaviour<,>)).As(typeof(IPipelineBehavior<,>));
         }
     }
 }

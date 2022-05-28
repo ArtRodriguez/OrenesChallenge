@@ -19,6 +19,10 @@ namespace VehicleService.Infrastructure
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<HistoricalLocation> HistoricalLocations { get; set; }
+
+        public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
+        public bool HasActiveTransaction => _currentTransaction != null;
+
         public VehicleServiceContext(DbContextOptions<VehicleServiceContext> options, IMediator mediator) : base(options)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
@@ -48,6 +52,53 @@ namespace VehicleService.Infrastructure
             }
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
+        {
+            if (_currentTransaction != null) return null;
+            _currentTransaction = await Database.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted);
+            return _currentTransaction;
+        }
+        public async Task CommitTransactionAsync(IDbContextTransaction transaction)
+        {
+            if (transaction == null) throw new ArgumentNullException(nameof(transaction));
+            if (transaction != _currentTransaction) throw new InvalidOperationException($"Transaction {transaction.TransactionId} is not current");
+
+            try
+            {
+                await SaveChangesAsync();
+                transaction.Commit();
+            }
+            catch
+            {
+                RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                if (_currentTransaction != null)
+                {
+                    _currentTransaction.Dispose();
+                    _currentTransaction = null;
+                }
+            }
+        }
+
+        public void RollbackTransaction()
+        {
+            try
+            {
+                _currentTransaction?.Rollback();
+            }
+            finally
+            {
+                if (_currentTransaction != null)
+                {
+                    _currentTransaction.Dispose();
+                    _currentTransaction = null;
+                }
+            }
         }
     }
 }

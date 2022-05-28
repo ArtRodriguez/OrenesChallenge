@@ -30,6 +30,10 @@ services:
       - IdentityAuthority=http://${IDENTITY_AUTHORITY:-idp}
       - ASPNETCORE_Kestrel__Certificates__Default__Password=@12345Aa
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx 
+      - EventBusConnection=${ESHOP_AZURE_SERVICE_BUS:-rabbitmq}
+      - EventBusUserName=${ESHOP_SERVICE_BUS_USERNAME}
+      - EventBusPassword=${ESHOP_SERVICE_BUS_PASSWORD}
+      - EventBusRetryCount=3      
     ports:
       - "5010:80"
       - "5011:443"
