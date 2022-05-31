@@ -33,3 +33,13 @@ services:
     depends_on:
       - idp
       - vehicleservice.api
+  
+  webhooks:
+    image: ${DOCKER_REGISTRY-}webhooks
+    build:
+        context: .
+        dockerfile: WebHooks.API/Dockerfile
+    depends_on:
+        - sqldata
+        - vehicleservice.api
+        - rabbitmq

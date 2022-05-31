@@ -180,11 +180,5 @@ namespace VehicleService.API
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
             return services;
         }
-
-        public static IServiceCollection AddCustomIntegration(this IServiceCollection services, IConfiguration configuration)
-        {
-
-            return services;
-        }
     }
 }

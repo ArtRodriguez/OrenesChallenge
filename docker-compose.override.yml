@@ -30,9 +30,9 @@ services:
       - IdentityAuthority=http://${IDENTITY_AUTHORITY:-idp}
       - ASPNETCORE_Kestrel__Certificates__Default__Password=@12345Aa
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx 
-      - EventBusConnection=${ESHOP_AZURE_SERVICE_BUS:-rabbitmq}
-      - EventBusUserName=${ESHOP_SERVICE_BUS_USERNAME}
-      - EventBusPassword=${ESHOP_SERVICE_BUS_PASSWORD}
+      - EventBusConnection=${ORENES_AZURE_SERVICE_BUS:-rabbitmq}
+      - EventBusUserName=${ORENES_SERVICE_BUS_USERNAME}
+      - EventBusPassword=${ORENES_SERVICE_BUS_PASSWORD}
       - EventBusRetryCount=3      
     ports:
       - "5010:80"
@@ -55,6 +55,15 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
       - ~/.aspnet/https:/https:ro
+  webhooks:
+    environment:
+      - EventBusConnection=${ORENES_AZURE_SERVICE_BUS:-rabbitmq}
+      - EventBusUserName=${ORENES_SERVICE_BUS_USERNAME}
+      - EventBusPassword=${ORENES_SERVICE_BUS_PASSWORD}
+      - EventBusRetryCount=3     
+    ports:
+        - "5040:80"
+        - "5041:443"
 volumes:
   vehicles-sqldata:
     external: false
