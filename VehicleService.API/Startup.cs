@@ -23,7 +23,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using VehicleService.API.Application.IntegrationEvents;
-using VehicleService.API.Infrastructure.AutofacModules;
+using VehicleService.API.Application.Infrastructure.AutofacModules;
 using VehicleService.Domain.AggregatesModel.OrderAggregate;
 using VehicleService.Domain.AggregatesModel.VehicleAggregate;
 using VehicleService.Infrastructure;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using VehicleService.Infrastructure.Queries.Orders;
 using VehicleService.Infrastructure.Queries.Vehicles;
 
-namespace VehicleService.API.Infrastructure.AutofacModules
+namespace VehicleService.API.Application.Infrastructure.AutofacModules
 {
     public class ApplicationModule : Autofac.Module
     {

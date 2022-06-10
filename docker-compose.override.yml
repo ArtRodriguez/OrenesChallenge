@@ -57,6 +57,7 @@ services:
       - ~/.aspnet/https:/https:ro
   webhooks:
     environment:
+      - ConnectionString=${WEBHOOKS_DB:-Server=sqldata;Database=WebhooksDb;User Id=sa;Password=Pass@word}
       - EventBusConnection=${ORENES_AZURE_SERVICE_BUS:-rabbitmq}
       - EventBusUserName=${ORENES_SERVICE_BUS_USERNAME}
       - EventBusPassword=${ORENES_SERVICE_BUS_PASSWORD}

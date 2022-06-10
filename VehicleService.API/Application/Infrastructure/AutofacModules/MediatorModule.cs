@@ -7,9 +7,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using VehicleService.API.Application.Commands.UpdateVehicleLocation;
 using VehicleService.API.Application.DomainEventHandlers.VehicleLocationUpdated;
-using VehicleService.API.Behaviors;
+using VehicleService.API.Application.Behaviors;
 
-namespace VehicleService.API.Infrastructure.AutofacModules
+namespace VehicleService.API.Application.Infrastructure.AutofacModules
 {
     public class MediatorModule : Autofac.Module
     {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using VehicleService.API.Application.IntegrationEvents;
 using VehicleService.Infrastructure;
 
-namespace VehicleService.API.Behaviors
+namespace VehicleService.API.Application.Behaviors
 {
     public class TransactionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
