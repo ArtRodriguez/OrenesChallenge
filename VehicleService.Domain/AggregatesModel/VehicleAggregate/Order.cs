@@ -4,7 +4,7 @@ using VehicleService.Domain.SeedWork;
 
 namespace VehicleService.Domain.AggregatesModel.OrderAggregate
 {
-    public class Order : Entity, IAggregateRoot
+    public class Order : Entity
     {
         public int VehicleId { get; private set;  }
         public string TrackingCode { get; private set; }        

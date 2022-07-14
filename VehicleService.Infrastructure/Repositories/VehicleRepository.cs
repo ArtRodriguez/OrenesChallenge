@@ -39,5 +39,10 @@ namespace VehicleService.Infrastructure.Repositories
             vehicle.UpdatedAt = DateTime.Now;
             return _context.Vehicles.Update(vehicle).Entity;
         }
+
+        public async Task<Vehicle> GetByTrackingCodeAsync(string trackingCode)
+        {
+            return await _context.Vehicles.Include(v => v.Orders).FirstOrDefaultAsync(v => v.Orders.Select(o => o.TrackingCode).Contains(trackingCode));
+        }
     }
 }

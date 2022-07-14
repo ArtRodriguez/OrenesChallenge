@@ -30,7 +30,7 @@ namespace ClientAppMvc.Services
             if (_discoveryDocument.IsError)
             {
                 logger.LogError($"Unable to get discovery document. Error is: {_discoveryDocument.Error}");
-                throw new Exception("Unable to get discovery document", _discoveryDocument.Exception);
+                //throw new Exception("Unable to get discovery document", _discoveryDocument.Exception);
             }
         }
 

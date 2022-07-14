@@ -59,6 +59,19 @@ namespace VehicleService.UnitTests.Domain
             Assert.Equal(numOrders + 1, vehicle.Orders.Count);
         }
         [Fact]
+        public void DeleteOrder_Ok()
+        {
+            // Arrange
+            var trackNumber = "0";
+            var vehicle = new Vehicle();
+            vehicle.AddOrder(trackNumber);
+            var numOrders = vehicle.Orders?.Count ?? 0;
+            // Act
+            vehicle.DeleteOrder(trackNumber);
+            // Assert
+            Assert.Equal(numOrders - 1, vehicle.Orders.Count);
+        }
+        [Fact]
         public void AddOrder_FullVehicle_ThrowsException()
         {
             // Arrange            

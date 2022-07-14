@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using VehicleService.Domain.AggregatesModel.OrderAggregate;
 using VehicleService.Domain.Events;
 using VehicleService.Domain.Exceptions;
@@ -65,6 +66,15 @@ namespace VehicleService.Domain.AggregatesModel.VehicleAggregate
             var order = new Order(Id, trackingCode);
             _orders.Add(order);
         }      
+
+        /// <summary>
+        /// Deletes a order from a vehicle
+        /// </summary>
+        /// <param name="trackingCode"></param>
+        public void DeleteOrder(string trackingCode)
+        {
+            _orders.Remove(_orders.FirstOrDefault(x => x.TrackingCode == trackingCode));
+        }
         /// <summary>
         /// Checks if the vehicle reached its max capacity
         /// </summary>

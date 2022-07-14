@@ -11,23 +11,24 @@ namespace VehicleService.API.Application.Commands.DeleteOrder
 {
     public class DeleteOrderCommandHandler : IRequestHandler<DeleteOrderCommand, bool>
     {
-        private readonly IOrderRepository _orderRepository;
+        private readonly IVehicleRepository _vehicleRepository;
 
-        public DeleteOrderCommandHandler(IOrderRepository orderRepository)
+        public DeleteOrderCommandHandler(IVehicleRepository vehicleRepository)
         {
-            _orderRepository = orderRepository;
+            _vehicleRepository = vehicleRepository;
         }
 
         public async Task<bool> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
         {
             // Check if VehicleId exists
-            var order = await _orderRepository.GetByTrackingCodeAsync(request.TrackingCode);
-            if (order == null)
+            var vehicle = await _vehicleRepository.GetByTrackingCodeAsync(request.TrackingCode);
+            if (vehicle == null)
             {
                 throw new ArgumentException($"Order with TrackingCode:{request.TrackingCode} not found");
             }
-            _orderRepository.Delete(order);            
-            return await _orderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+            vehicle.DeleteOrder(request.TrackingCode);
+            _vehicleRepository.Update(vehicle);            
+            return await _vehicleRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
         }
     }
 }

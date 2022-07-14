@@ -11,6 +11,7 @@ namespace VehicleService.Domain.AggregatesModel.VehicleAggregate
     {
         Vehicle Add(Vehicle vehicle);
         Vehicle Update(Vehicle vehicle);        
-        Task<Vehicle> GetAsync(int vehicleId);        
+        Task<Vehicle> GetAsync(int vehicleId);
+        Task<Vehicle> GetByTrackingCodeAsync(string trackingCode);
     }
 }

@@ -64,8 +64,7 @@ namespace VehicleService.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "VehicleService.API", Version = "v1" });
             });
 
-            services.AddTransient<IVehicleRepository, VehicleRepository>();
-            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IVehicleRepository, VehicleRepository>();            
             services.AddIntegrationServices(Configuration);
             services.AddEventBus(Configuration);
         }
